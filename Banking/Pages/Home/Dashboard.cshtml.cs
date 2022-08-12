@@ -56,9 +56,6 @@ namespace Banking.Pages
                 checkingBalance = ConvertFromPennies(ApplicationUser.CheckingBalance);
                 loanBalance = ConvertFromPennies(ApplicationUser.LoanBalance);
 
-                // We will also need to populate a list of all transactions here that are specific
-                // to the applicationuser
-
                 return Page();
             }
             else
@@ -77,9 +74,6 @@ namespace Banking.Pages
 
         public async Task<IActionResult> OnPostTransfer()
         {
-            // this is where we will need to handle the changing of the balances and adding to
-            // a list of transactions
-            //capture form data
             string transType = "Transfer";
             var accountFrom = Request.Form["transferFrom"];
             var accountTo = Request.Form["transferTo"];
@@ -113,7 +107,6 @@ namespace Banking.Pages
             }
             
 
-/**************need a sepearate transaction for this section of code *******************/
             //figure out the TO account stuff next
             if (accountTo == "Savings" || accountTo == "Checking")//if the account TO is checking or savings use positive amount and create transaction record
             {
@@ -136,7 +129,7 @@ namespace Banking.Pages
                 CreateTransaction(TransactionB, transType, accountTo, amtInPennies * (-1));
                 _context.Transaction.Add(TransactionB);
             }
-/****************************************************************************************/
+
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
@@ -144,7 +137,6 @@ namespace Banking.Pages
         //If Deposit/Withdraw button is clicked
         public async Task<IActionResult> OnPostDepositWithdraw()
         {
-            //TODO: create logic for deposit/withdraw modal
             var userName = User.Identity.Name;
             ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.UserName == userName);
 
