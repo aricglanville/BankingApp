@@ -105,7 +105,6 @@ namespace Banking.Pages
                 CreateTransaction(TransactionA, transType, accountFrom, amtInPennies);
                 _context.Transaction.Add(TransactionA);
             }
-            
 
             //figure out the TO account stuff next
             if (accountTo == "Savings" || accountTo == "Checking")//if the account TO is checking or savings use positive amount and create transaction record
